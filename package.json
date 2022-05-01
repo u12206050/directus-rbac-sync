@@ -1,0 +1,42 @@
+{
+  "name": "directus-rbac-sync",
+  "version": "0.1.0",
+  "description": "Tool for exporting and importing Directus roles and permissions.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/u12206050/directus-rbac-sync.git"
+  },
+  "keywords": [
+    "directus",
+    "directus-extension"
+  ],
+  "author": "Gerard Lamusse",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/u12206050/directus-rbac-sync/issues"
+  },
+  "homepage": "https://github.com/u12206050/directus-rbac-sync#readme",
+  "dependencies": {
+    "fs-extra": "^10.1.0",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@directus/shared": "^9.9.1",
+    "@types/fs-extra": "^9.0.13",
+    "@types/js-yaml": "^4.0.5",
+    "@types/knex": "^0.16.1",
+    "@types/lodash": "^4.14.182",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "eslint": "^8.14.0",
+    "typescript": "^4.6.4",
+    "typescript-eslint-parser": "^22.0.0"
+  }
+}

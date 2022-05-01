@@ -1,0 +1,35 @@
+const defaultRules = {
+	// No console statements in production
+	'no-console': process.env.NODE_ENV !== 'development' ? 'error' : 'off',
+	// No debugger statements in production
+	'no-debugger': process.env.NODE_ENV !== 'development' ? 'error' : 'off',
+	// It's recommended to turn off this rule on TypeScript projects
+	'no-undef': 'off',
+	// Allow ts-directive comments (used to suppress TypeScript compiler errors)
+	'@typescript-eslint/ban-ts-comment': 'off',
+	// Allow usage of the any type (consider to enable this rule later on)
+	'@typescript-eslint/no-explicit-any': 'off',
+	// Allow usage of require statements (consider to enable this rule later on)
+	'@typescript-eslint/no-var-requires': 'off',
+	// Allow non-null assertions for now (consider to enable this rule later on)
+	'@typescript-eslint/no-non-null-assertion': 'off',
+	// Allow unused arguments and variables when they begin with an underscore
+	'@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+};
+
+module.exports = {
+	// Stop looking for ESLint configurations in parent folders
+	root: true,
+	// Global variables: Browser and Node.js
+	env: {
+		browser: true,
+		node: true,
+	},
+	// Basic configuration for js files
+	plugins: ['@typescript-eslint'],
+	extends: ['eslint:recommended'],
+	rules: defaultRules,
+	parserOptions: {
+		ecmaVersion: 2020,
+	},
+};
