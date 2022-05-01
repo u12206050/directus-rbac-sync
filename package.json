@@ -1,6 +1,6 @@
 {
   "name": "directus-rbac-sync",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Tool for exporting and importing Directus roles and permissions.",
   "main": "index.js",
   "scripts": {
