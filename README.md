@@ -47,6 +47,7 @@ All permissions are stored per collection in `config/permissions/[COLLECTION].ya
 Permissions are separated by `action` with roles being a group of role ids that have the same permissions.
 
 ## Why?
+
 This is very useful for syncing roles and permissions between environments and developers.
 
 The file based approach is also useful for tracking changes using git.

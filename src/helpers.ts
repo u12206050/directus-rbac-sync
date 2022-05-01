@@ -133,7 +133,9 @@ export async function exportPermissions(collection: string, permissionsService: 
 
         const found = uniquePerms.find((unique) => isEqual(unique[0], perm))
         if (found) {
-            found[1].push(role);
+			if (! found[1].includes(role)) {
+				found[1].push(role);
+			}
         } else {
             uniquePerms.push([perm, [role]]);
         }
