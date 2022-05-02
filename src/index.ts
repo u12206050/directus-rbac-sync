@@ -94,7 +94,7 @@ const registerHook: HookConfig = (({ action, filter, init }, extCtx) => {
         logger.info('RBAC imported!')
     }
 
-    if (['EXPORT', 'BOTH'].includes(env.RBAC_SYNC_MODE)) {
+    if (['EXPORT', 'FULL'].includes(env.RBAC_SYNC_MODE)) {
         action('roles.create', onRoleChanges)
         action('roles.update', onRoleChanges)
         action('roles.delete', onRoleChanges)
@@ -106,7 +106,7 @@ const registerHook: HookConfig = (({ action, filter, init }, extCtx) => {
         action('permissions.delete', onDelete)
     }
 
-    if (['IMPORT', 'BOTH'].includes(env.RBAC_SYNC_MODE)) {
+    if (['IMPORT', 'FULL'].includes(env.RBAC_SYNC_MODE)) {
         setTimeout(syncToDb, 10)
     }
 
@@ -114,7 +114,7 @@ const registerHook: HookConfig = (({ action, filter, init }, extCtx) => {
         const dbCommand = program.command('rbac');
 
         // Only allow this command when not automatically importing
-        if (! ['IMPORT', 'BOTH'].includes(env.RBAC_SYNC_MODE)) {
+        if (! ['IMPORT', 'FULL'].includes(env.RBAC_SYNC_MODE)) {
             dbCommand.command('import')
                 .description('Sync configured roles and permissions from files to database')
                 .action(async () => {

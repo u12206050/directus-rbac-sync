@@ -16,7 +16,7 @@ Remember to set the `RBAC_SYNC_MODE`  in your `.env` file.
 **POSSIBLE VALUES:**
  - `EXPORT`: Exports all changes to file upon create/update/delete-ing
  - `IMPORT`: Imports roles and permissions stored in files, upon starting Directus
- - `BOTH`: Executes both EXPORT and IMPORT
+ - `FULL`: Executes both EXPORT and IMPORT
  - `NONE`: Does nothing
 
 
