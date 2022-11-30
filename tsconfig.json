@@ -10,7 +10,7 @@
     "strict": true,
     "lib": ["es2021"],
     "skipLibCheck": true,
-    "declaration": true,
+    "declaration": false,
     "resolveJsonModule": true
   },
   "exclude": ["node_modules", "dist", "extensions", "tests"]

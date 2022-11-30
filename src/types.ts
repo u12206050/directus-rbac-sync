@@ -1,38 +1,24 @@
 import type { Knex } from 'knex';
-import type { Accountability, Filter, PermissionsAction, Query } from '@directus/shared/src/types';
+import type { Accountability } from '@directus/shared/types';
+import type { Permission, Role } from '@directus/shared/types';
 
-export type StoredPermission = {
-	action: PermissionsAction;
-	roles?: Array<string|null>;
-	permissions?: Filter | null;
-	validation?: Filter | null;
-	presets?: Record<string, any> | null;
-	fields?: Array<string> | string | null;
-}
+export type StoredPermission = Pick<Permission, 'action'> &
+	Partial<Pick<Permission, 'permissions' | 'validation'>> & {
+		roles?: Array<string|null>;
+		presets?: Record<string, any> | null;
+		fields?: Array<string> | string | null;
+	};
+export type StoredRole = Partial<Role> & Pick<Role, 'id' | 'name' | 'icon'>;
 
-export type StoredRole = {
-	id: string;
-	name: string;
-	icon: string;
-	description?: string;
-	enforce_2fa?: boolean;
-	external_id?: string;
-	ip_whitelist?: string[];
-	app_access?: boolean;
-	admin_access?: boolean;
-}
-
-
-// Defining some Directus types here in order to get type hinting without installing entire
+//
+// Defining used Directus types here in order to get type hinting without installing entire Directus
+//
 export type Item = Record<string, any>;
-
 export type PrimaryKey = string | number;
-
 export type MutationOptions = {
 	emitEvents?: boolean;
 };
-
-export interface AbstractService {
+export interface ItemsService {
 	knex: Knex;
 	accountability: Accountability | null;
 

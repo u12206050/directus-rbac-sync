@@ -1,4 +1,4 @@
-import { ActionHandler, FilterHandler, HookConfig, Collection, Permission } from "@directus/shared/src/types";
+import { ActionHandler, FilterHandler, HookConfig, Collection, Permission } from "@directus/shared/types";
 import {
     exportPermissions,
     exportRoles,
@@ -113,20 +113,22 @@ const registerHook: HookConfig = (({ action, filter, init }, extCtx) => {
     init('cli.before', async ({ program }) => {
         const dbCommand = program.command('rbac');
 
-        // Only allow this command when not automatically importing
-        if (! ['IMPORT', 'FULL'].includes(env.RBAC_SYNC_MODE)) {
-            dbCommand.command('import')
-                .description('Sync configured roles and permissions from files to database')
-                .action(async () => {
+        // Only allow this command when not automatically importing        
+        dbCommand.command('import')
+            .description('Sync configured roles and permissions from files to database')
+            .action(async () => {
+                if (! ['IMPORT', 'FULL'].includes(env.RBAC_SYNC_MODE)) {
                     try {
                         await syncToDb()
                         process.exit(0);
                     } catch (err: any) {
                         logger.error(err);
-                        process.exit(1);
                     }
-                })
-        }
+                } else {
+                    logger.warn('RBAC Sync is configured to automatically import roles and permissions. Skipping manual import.')
+                }
+                process.exit(1);
+            })
 
         dbCommand.command('export')
             .description('Sync roles and permissions from DB to file')

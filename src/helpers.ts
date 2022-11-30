@@ -1,9 +1,9 @@
-import { Permission, Role } from '@directus/shared/src/types';
+import { Permission, Role } from '@directus/shared/types'; 
 import { dump as toYaml, load as fromYaml } from 'js-yaml';
 import fse from 'fs-extra';
 import path from 'path';
 import {isEmpty, isEqual} from 'lodash';
-import {AbstractService, StoredPermission, StoredRole} from './types';
+import { StoredPermission, StoredRole, ItemsService} from './types';
 
 const configPath = process.env.RBAC_CONFIG_PATH || './config';
 const permissionsPath = path.resolve(configPath, 'permissions');
@@ -13,7 +13,7 @@ const rolesFile = path.join(path.resolve(configPath), `roles.yaml`)
 // PERMISSIONS
 //
 
-export async function getPermissionCollection(permissionId: string|number, permissionsService: AbstractService) {
+export async function getPermissionCollection(permissionId: string|number, permissionsService: ItemsService) {
     const permission = await permissionsService.readOne(permissionId, {
         fields: ['collection'],
     }) as Permission;
@@ -33,7 +33,7 @@ export async function listConfiguredCollections() {
     return collections
 }
 
-export async function importPermissions(collection: string, permissionsService: AbstractService) {
+export async function importPermissions(collection: string, permissionsService: ItemsService) {
     const yamlFile = path.join(permissionsPath, `${collection}.yaml`)
     if (! fse.pathExists(yamlFile)) {
         return 0
@@ -102,7 +102,7 @@ export async function importPermissions(collection: string, permissionsService: 
     await Promise.all(queue)
 }
 
-export async function exportPermissions(collection: string, permissionsService: AbstractService) {
+export async function exportPermissions(collection: string, permissionsService: ItemsService) {
     const rows = await permissionsService.readByQuery({
         filter: {
             collection,
@@ -164,7 +164,7 @@ export async function exportPermissions(collection: string, permissionsService: 
 // ROLES
 //
 
-export async function importRoles(rolesService: AbstractService) {
+export async function importRoles(rolesService: ItemsService) {
     if (! fse.pathExists(rolesFile)) {
         return 0
     }
@@ -191,7 +191,7 @@ export async function importRoles(rolesService: AbstractService) {
     return await rolesService.upsertMany(rolesToImport, { emitEvents: false })
 }
 
-export async function exportRoles(rolesService: AbstractService) {
+export async function exportRoles(rolesService: ItemsService) {
     const rows = await rolesService.readByQuery({
         limit: -1,
         fields: ['id', 'name', 'icon', 'description', 'enforce_2fa', 'external_id', 'ip_whitelist', 'app_access', 'admin_access'],
