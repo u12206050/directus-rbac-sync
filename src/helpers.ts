@@ -173,14 +173,14 @@ export async function importRoles(rolesService: ItemsService) {
     const roles = fromYaml(yamlInput) as Array<StoredRole>
 
     const rolesToImport: Array<Role> = roles.map((block) => {
-        const { id, name, icon, description, enforce_2fa, external_id, ip_whitelist, app_access, admin_access } = block
+        const { id, name, icon, description, enforce_tfa, external_id, ip_whitelist, app_access, admin_access } = block
 
         return {
             id,
             name,
             icon: icon ?? 'supervised_user_circle',
             description: description ?? '',
-            enforce_2fa: enforce_2fa ?? false,
+            enforce_tfa: enforce_tfa ?? false,
             external_id: external_id ?? null,
             ip_whitelist: ip_whitelist ?? [],
             app_access: app_access ?? false,
@@ -194,7 +194,7 @@ export async function importRoles(rolesService: ItemsService) {
 export async function exportRoles(rolesService: ItemsService) {
     const rows = await rolesService.readByQuery({
         limit: -1,
-        fields: ['id', 'name', 'icon', 'description', 'enforce_2fa', 'external_id', 'ip_whitelist', 'app_access', 'admin_access'],
+        fields: ['id', 'name', 'icon', 'description', 'enforce_tfa', 'external_id', 'ip_whitelist', 'app_access', 'admin_access'],
     }) as Role[]
 
     const roles: Array<StoredRole> = rows.map((row) => {
