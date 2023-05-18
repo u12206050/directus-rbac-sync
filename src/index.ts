@@ -1,13 +1,15 @@
-import { ActionHandler, FilterHandler, HookConfig, Collection, Permission } from "@directus/shared/types";
+import { ActionHandler, Collection, FilterHandler, Permission } from "@directus/types";
 import {
     exportPermissions,
     exportRoles,
-    listConfiguredCollections,
     importPermissions,
-    importRoles
+    importRoles,
+    listConfiguredCollections
 } from "./helpers";
 
-const registerHook: HookConfig = (({ action, filter, init }, extCtx) => {
+import { defineHook } from '@directus/extensions-sdk';
+
+export default defineHook(({ filter, action, init }, extCtx) => {
     const { services: { CollectionsService, PermissionsService, RolesService }, env, logger } = extCtx;
 
     const onCreate: ActionHandler = async ({ key }, { database, schema }) => {
@@ -165,6 +167,4 @@ const registerHook: HookConfig = (({ action, filter, init }, extCtx) => {
                 }
             });
     })
-})
-
-export default registerHook
+});

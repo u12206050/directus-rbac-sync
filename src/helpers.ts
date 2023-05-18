@@ -1,9 +1,9 @@
-import { Permission, Role } from '@directus/shared/types'; 
-import { dump as toYaml, load as fromYaml } from 'js-yaml';
+import { Permission, Role } from '@directus/types';
 import fse from 'fs-extra';
+import { load as fromYaml, dump as toYaml } from 'js-yaml';
+import { isEmpty, isEqual } from 'lodash-es';
 import path from 'path';
-import {isEmpty, isEqual} from 'lodash';
-import { StoredPermission, StoredRole, ItemsService} from './types';
+import { ItemsService, StoredPermission, StoredRole } from './types';
 
 const configPath = process.env.RBAC_CONFIG_PATH || './config';
 const permissionsPath = path.resolve(configPath, 'permissions');

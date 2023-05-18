@@ -1,6 +1,5 @@
+import type { Accountability, Permission, Role } from '@directus/types';
 import type { Knex } from 'knex';
-import type { Accountability } from '@directus/shared/types';
-import type { Permission, Role } from '@directus/shared/types';
 
 export type StoredPermission = Pick<Permission, 'action'> &
 	Partial<Pick<Permission, 'permissions' | 'validation'>> & {
