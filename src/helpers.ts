@@ -111,7 +111,9 @@ export async function exportPermissions(collection: string, permissionsService: 
 
     // Find matching permissions to group roles into
     const uniquePerms: Array<[StoredPermission, Array<string | null>]> = []
-    rows.forEach(row => {
+	rows.sort(
+		(rowA, rowB) => rowA.action.localeCompare(rowB.action)
+	).forEach((row) => {
         const { role, action, permissions, validation, presets, fields } = row;
         const perm: StoredPermission = {
             action
