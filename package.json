@@ -43,6 +43,7 @@
     "@types/js-yaml": "^4.0.5",
     "@types/knex": "^0.16.1",
     "@types/lodash": "^4.14.191",
+    "@types/lodash-es": "^4.17.7",
     "@types/node": "^20.1.5",
     "typescript": "^5.0.4"
   },
