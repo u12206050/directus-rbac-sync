@@ -33,7 +33,6 @@
   "dependencies": {
     "fs-extra": "^11.1.0",
     "js-yaml": "^4.1.0",
-    "lodash": "^4.17.21",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
@@ -42,7 +41,6 @@
     "@types/fs-extra": "^11.0.1",
     "@types/js-yaml": "^4.0.5",
     "@types/knex": "^0.16.1",
-    "@types/lodash": "^4.14.191",
     "@types/lodash-es": "^4.17.7",
     "@types/node": "^20.1.5",
     "typescript": "^5.0.4"
