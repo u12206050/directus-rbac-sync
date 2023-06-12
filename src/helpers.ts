@@ -92,7 +92,7 @@ export async function importPermissions(collection: string, permissionsService: 
             fields: ['id']
         }, { emitEvents: false })
 
-        if (exists?.length) {
+        if (exists?.length && exists[0]?.id) {
             await permissionsService.updateOne(exists[0].id, permission, { emitEvents: false })
         } else {
             await permissionsService.createOne(permission, { emitEvents: false })
@@ -111,7 +111,9 @@ export async function exportPermissions(collection: string, permissionsService: 
 
     // Find matching permissions to group roles into
     const uniquePerms: Array<[StoredPermission, Array<string | null>]> = []
-    rows.forEach(row => {
+	rows.sort(
+		(rowA, rowB) => rowA.action.localeCompare(rowB.action)
+	).forEach((row) => {
         const { role, action, permissions, validation, presets, fields } = row;
         const perm: StoredPermission = {
             action
@@ -153,10 +155,15 @@ export async function exportPermissions(collection: string, permissionsService: 
 
     const yamlFile = path.join(permissionsPath, `${collection}.yaml`)
     if (! yamlOutput.startsWith('[]')) {
-        yamlOutput = yamlOutput.replaceAll('- action', '\n- action')
-        await fse.writeFile(yamlFile, yamlOutput, 'utf8');
+        yamlOutput = yamlOutput.replace(/- action/g, '\n- action')
+        await fse.writeFile(yamlFile, yamlOutput, 'utf8').catch(console.error);
     } else {
-        await fse.remove(yamlFile)
+		const filepathDir = path.dirname(yamlFile)
+		await fse.readdir(filepathDir).then((files) => {
+			if (files.find((file) => file === `${collection}.yaml`)) {
+				return fse.remove(yamlFile)
+			}
+		}).catch(console.error)
     }
 }
 
@@ -221,7 +228,7 @@ export async function exportRoles(rolesService: ItemsService) {
     })
 
     if (! yamlOutput.startsWith('[]')) {
-        yamlOutput = yamlOutput.replaceAll('- id', '\n- id')
+		yamlOutput = yamlOutput.replace(/- id/g, '\n- id')
 
         await fse.writeFile(rolesFile, yamlOutput, 'utf8');
     } else {
