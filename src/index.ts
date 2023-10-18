@@ -1,3 +1,5 @@
+import { clearSystemCache } from "@directus/api/cache";
+import { defineHook } from '@directus/extensions-sdk';
 import { ActionHandler, Collection, FilterHandler, Permission } from "@directus/types";
 import {
     exportPermissions,
@@ -6,8 +8,6 @@ import {
     importRoles,
     listConfiguredCollections
 } from "./helpers";
-
-import { defineHook } from '@directus/extensions-sdk';
 
 export default defineHook(({ filter, action, init }, extCtx) => {
     const { services: { CollectionsService, PermissionsService, RolesService }, env, logger } = extCtx;
@@ -93,6 +93,9 @@ export default defineHook(({ filter, action, init }, extCtx) => {
             importPermissions(collection, permissionsService)
         ))
 
+		// WIP; not sure if this is best way to solve
+		await clearSystemCache();
+
         logger.info('RBAC imported!')
     }
 
@@ -112,10 +115,16 @@ export default defineHook(({ filter, action, init }, extCtx) => {
         setTimeout(syncToDb, 10)
     }
 
+	init('app.before', async ({ program }) => {
+		if (['IMPORT', 'FULL'].includes(env.RBAC_SYNC_MODE)) {
+			await syncToDb()
+		}
+	});
+
     init('cli.before', async ({ program }) => {
         const dbCommand = program.command('rbac');
 
-        // Only allow this command when not automatically importing        
+        // Only allow this command when not automatically importing
         dbCommand.command('import')
             .description('Sync configured roles and permissions from files to database')
             .action(async () => {

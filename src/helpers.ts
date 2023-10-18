@@ -86,7 +86,7 @@ export async function importPermissions(collection: string, permissionsService: 
             filter: {
                 collection,
                 action,
-                role: role === null ? permissionsService.knex.raw('NULL') : role,
+                role: role === null ? { _null: true } : role,
             },
             limit: 1,
             fields: ['id']
