@@ -2,11 +2,11 @@ import { clearSystemCache } from "@directus/api/cache";
 import { defineHook } from '@directus/extensions-sdk';
 import { ActionHandler, Collection, FilterHandler, Permission } from "@directus/types";
 import {
-    exportPermissions,
-    exportRoles,
-    importPermissions,
-    importRoles,
-    listConfiguredCollections
+	exportPermissions,
+	exportRoles,
+	importPermissions,
+	importRoles,
+	listConfiguredCollections
 } from "./helpers";
 
 export default defineHook(({ filter, action, init }, extCtx) => {

@@ -2,7 +2,7 @@
   "name": "directus-rbac-sync",
   "description": "Tool for exporting and importing Directus roles and permissions.",
   "icon": "extension",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "keywords": [
     "directus",
     "directus-extension",
@@ -38,14 +38,11 @@
   "devDependencies": {
     "@directus/extensions-sdk": "^10.1.8",
     "@directus/types": "^10.0.0",
-    "@types/fs-extra": "^11.0.1",
-    "@types/js-yaml": "^4.0.5",
+    "@types/fs-extra": "^11.0.2",
+    "@types/js-yaml": "^4.0.8",
     "@types/knex": "^0.16.1",
-    "@types/lodash-es": "^4.17.7",
-    "@types/node": "^20.1.5",
-    "typescript": "^5.0.4"
-  },
-  "peerDependencies": {
-    "@directus/api": "*"
+    "@types/lodash-es": "^4.17.10",
+    "@types/node": "^20.8.7",
+    "typescript": "^5.2.2"
   }
 }
